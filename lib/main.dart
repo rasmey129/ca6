@@ -47,7 +47,9 @@ void setupWindow() {
 /// [ChangeNotifier] is a class in `flutter:foundation`. [Counter] does
 /// _not_ depend on Provider.
 class Counter with ChangeNotifier {
+  Color backgroundColor = Colors.lime;
   int value = 0;
+  String message = "you're old";
   void increment() {
     value += 1;
     notifyListeners();
@@ -56,7 +58,14 @@ class Counter with ChangeNotifier {
     value -=1;
     notifyListeners();
   }
+  void ageUpdate(){
+    if (value >= 12){
+
+      
+    }
+  }
 }
+  
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -87,6 +96,7 @@ class MyHomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            
             // Consumer looks for an ancestor Provider widget
             // and retrieves its model (Counter, in this case).
             // Then it uses that model to build widgets, and will trigger
@@ -94,6 +104,12 @@ class MyHomePage extends StatelessWidget {
             Consumer<Counter>(
               builder: (context, counter, child) => Text(
                 'I am ${counter.value} years old.',
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
+            ),
+            Consumer<Counter>(
+              builder: (context, counter, child) => Text(
+                counter.message,
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
             ),
