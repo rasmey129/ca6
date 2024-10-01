@@ -77,8 +77,6 @@ class Counter with ChangeNotifier {
     }
   }
 }
-  
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -104,43 +102,45 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Flutter Demo Home Page'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            
-            // Consumer looks for an ancestor Provider widget
-            // and retrieves its model (Counter, in this case).
-            // Then it uses that model to build widgets, and will trigger
-            // rebuilds if the model is updated.
-            Consumer<Counter>(
-              builder: (context, counter, child) => Text(
-                'I am ${counter.value} years old.',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-            ),
-            Consumer<Counter>(
-              builder: (context, counter, child) => Text(
-                counter.message,
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-            ),
+      body: Consumer<Counter>(
+        builder: (context, counter, child) {
+          return Container(
+            color: counter.backgroundColor,  // Apply background color
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'I am ${counter.value} years old.',
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                  Text(
+                    counter.message,
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      var counter = context.read<Counter>();
+                      counter.increment();
+                      counter.ageUpdate();
+                    },
+                    child: const Text('Increase Age'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      var counter = context.read<Counter>();
+                      counter.decrement();
+                      counter.ageUpdate();
 
-            ElevatedButton(onPressed: (){
-              var counter = context.read<Counter>();
-          counter.increment();
-          counter.ageUpdate();
-            }
-            , child: Text('Increase Age')),
-            ElevatedButton(onPressed: (){
-              var counter = context.read<Counter>();
-          counter.decrement();
-            }
-            , child: Text('Decrease Age'))
-          ],
-        ),
+                    },
+                    child: const Text('Decrease Age'),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
-    
   }
 }
