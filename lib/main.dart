@@ -105,7 +105,7 @@ class MyHomePage extends StatelessWidget {
       body: Consumer<Counter>(
         builder: (context, counter, child) {
           return Container(
-            color: counter.backgroundColor,  // Apply background color
+            color: counter.backgroundColor,  
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
