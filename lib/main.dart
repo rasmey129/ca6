@@ -49,7 +49,7 @@ void setupWindow() {
 class Counter with ChangeNotifier {
   Color backgroundColor = Colors.lime;
   int value = 0;
-  String message = "you're old";
+  String message = "";
   void increment() {
     value += 1;
     notifyListeners();
@@ -59,9 +59,21 @@ class Counter with ChangeNotifier {
     notifyListeners();
   }
   void ageUpdate(){
-    if (value >= 12){
-
-      
+    if (value <= 12){
+        message = "You're a child!";
+        backgroundColor = Colors.lightBlue;
+    } else if (value > 12 && value <=19){
+        message = "Teenager time!";
+        backgroundColor = Colors.lightGreen;
+    } else if (value > 19 && value <=30){
+      message = "You're a young adult!";
+      backgroundColor = Colors.yellow;
+    } else if (value > 30 && value <= 50){
+      message = "You're an adult now!";
+      backgroundColor = Colors.orange;
+    } else if (value > 50){
+      message = "Golden years!";
+      backgroundColor = Colors.grey;
     }
   }
 }
@@ -117,6 +129,7 @@ class MyHomePage extends StatelessWidget {
             ElevatedButton(onPressed: (){
               var counter = context.read<Counter>();
           counter.increment();
+          counter.ageUpdate();
             }
             , child: Text('Increase Age')),
             ElevatedButton(onPressed: (){
